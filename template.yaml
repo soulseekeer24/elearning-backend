@@ -22,7 +22,7 @@ Resources:
         CatchAll:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /hello
+            Path: /platzi
             Method: POST
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
@@ -34,7 +34,7 @@ Outputs:
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   platziScrapperAPI:
     Description: "API Gateway endpoint URL for Prod environment for First Function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/platzi/"
   platziScrapperFunction:
     Description: "First Lambda Function ARN"
     Value: !GetAtt platziScrapperFunction.Arn
