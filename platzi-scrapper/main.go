@@ -79,6 +79,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}
 
 	courseList, err := searchForCourse(bodyRequest.Keywords)
+
 	if err != nil {
 		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
 	}
@@ -93,6 +94,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
 	}
 	resp := events.APIGatewayProxyResponse{Body: string(response), StatusCode: 200}
+
 	resp.Headers = make(map[string]string)
 	resp.Headers["Content-Type"] = "application/json"
 	return resp, nil
