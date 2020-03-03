@@ -27,7 +27,7 @@ Resources:
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           PARAM1: VALUE
-    edxScrapperFunction:
+  edxScrapperFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: edx-scrapper/
@@ -54,7 +54,7 @@ Outputs:
   platziScrapperFunction:
     Description: "First Lambda Function ARN"
     Value: !GetAtt platziScrapperFunction.Arn
-  edxScrapperFunctionIamRole:
+  platziScrapperFunctionIamRole:
     Description: "Implicit IAM Role created for Hello World function"
     Value: !GetAtt edxScrapperFunctionRole.Arn
     edxScrapperAPI:
