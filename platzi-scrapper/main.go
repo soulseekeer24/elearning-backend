@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/aws/aws-lambda-go/events"
@@ -10,6 +11,9 @@ import (
 )
 
 const baseURL = "https://platzi.com"
+const courseListSelector = "body > section.SearcherMaterial > div > ul > a"
+const courseImgSelector = ".SearcherMaterial-itemImage > img"
+const courseTitleSelector = ".SearcherMaterial-itemName"
 
 // CourseInfo represent all the data for course
 type CourseInfo struct {
@@ -46,21 +50,19 @@ func searchForCourse(courses []string) ([]CourseInfo, error) {
 		return nil, err
 	}
 
-	coursesList := make([]CourseInfo, 1)
+	coursesList := make([]CourseInfo, 0)
 
-	doc.Find("body > section.SearcherMaterial > div > ul > a").Each(func(i int, s *goquery.Selection) {
+	doc.Find(courseListSelector).Each(func(i int, s *goquery.Selection) {
 
-		imageURL, existImage := s.Find(".SearcherMaterial-itemImage > img").First().Attr("src")
-		link, existLink := s.Attr("href")
+		imageURL, _ := s.Find(courseImgSelector).First().Attr("src")
+		link, _ := s.Attr("href")
 
-		if existImage && existLink {
-			course := CourseInfo{
-				Title:    s.Find(".SearcherMaterial-itemName").First().Text(),
-				ImageURL: imageURL,
-				URL:      baseURL + link}
+		course := CourseInfo{
+			Title:    strings.TrimSpace(s.Find(courseTitleSelector).First().Text()),
+			ImageURL: strings.TrimSpace(imageURL),
+			URL:      strings.TrimSpace(baseURL + link)}
 
-			coursesList = append(coursesList, course)
-		}
+		coursesList = append(coursesList, course)
 	})
 
 	return coursesList, nil
