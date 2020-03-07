@@ -1,10 +1,11 @@
-package edx
+package main
 
 import (
 	"context"
 	"log"
 
 	"github.com/chromedp/chromedp"
+	"github.com/golearn/common"
 )
 
 const API = "https://www.edx.org/es/course?search_query="
@@ -34,24 +35,20 @@ const jssQuery = `
 		})();
 `
 
-type CourseInfo struct {
-	Title    string `json:"title"`
-	URL      string `json:"url"`
-	ImageURL string `json:"imageURL"`
-}
-
-func HandleRequest(ctx context.Context, courseName string) ([]CourseInfo, error) {
+func HandleRequest(ctx context.Context, courseName string) ([]common.CourseInfo, error) {
 	// create context
 	result := SearchEDX(courseName)
 	return result, nil
 }
-
-func SearchEDX(courseName string) []CourseInfo {
+func main(){
+	fmt.("lol")
+}
+func SearchEDX(courseName string) []common.CourseInfo {
 	ctx, cancel := chromedp.NewContext(context.Background())
 	defer cancel()
 
 	// run task list
-	var res []CourseInfo
+	var res []common.CourseInfo
 	err := chromedp.Run(ctx,
 		chromedp.Navigate(API+courseName),
 		chromedp.WaitVisible(`#search-results-section`, chromedp.ByID),
