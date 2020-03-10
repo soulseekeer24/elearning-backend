@@ -1,4 +1,5 @@
 // package min
+package main
 
 // impor (
 // 	"ft"
@@ -7,7 +8,7 @@
 // 	"testig"
 
 // 	"github.com/aws/aws-lambda-go/evens"
-/ )
+//)
 
 // func TestHandler(t *testing.T {
 // 	t.Run("Unable to get IP", func(t *testing.T {
@@ -61,4 +62,4 @@
 // 			t.Fatal("Everything should be o")
 // 	}
 // })
-/ }
+// }

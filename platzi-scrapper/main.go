@@ -3,84 +3,89 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/golearn/common"
 )
 
 const baseURL = "https://platzi.com"
+const courseListSelector = "body > section.SearcherMaterial > div > ul > a"
+const courseImgSelector = ".SearcherMaterial-itemImage > img"
+const courseTitleSelector = ".SearcherMaterial-itemName"
 
+func searchForCourse(courses []string) ([]common.CourseInfo, error) {
 
-
-var courseQuery = ""
-	for i := 0; i < len(courses) i++ {
-		courseQuery += courses[i + "+"
-	
-if err != nil {
-	return nil, err
+	var courseQuery = ""
+	for i := 0; i < len(courses); i++ {
+		courseQuery += courses[i] + "+"
 	}
 
-	oc, err := goquery.NewDocumentFomReader(resp.Body)
-
-if err != nil {
-	return nil, err
+	resp, err := http.Get(baseURL + "/search/?search=" + courseQuery + "&filter=course")
+	if err != nil {
+		return nil, err
 	}
 
-	cursesList := make([]common.CoureInfo, 1)
-
-doc.Find("body > section.SearcherMaterial > div > ul> a").Each(func(i int, s *goquery.Selection) {
-
-		imageURL, exismage := s.Find(".SearcherMaterial-itemImage > img").First().Attr("src")
-		link, existLink= s.Attr("href")
-
-if existImage && existLink {
-			course := common.CourseInfo{
-		Title:    s.Find(".SearcherMaterial-itemName").First().Text(),
-				ImageURL: imgeURL,
-			URL:      baseRL + link}
-
-		coursesList = append(coursesList course)
-	}
-})
-
-return coursesList, nil
-}
-
-nc handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	// common.BodyRequest will beused to take he json response from client and bild it
-	comon.BodyRequest := como.BodyRequest{
-		Kywords: []string{},
-}
-
-rr := json.Unmarshal([]byte(request.Body), &common.BodyRquest)
-
-	iferr != nil {
-		rturn events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, ni
-}
-
-	urseList, err := searchForCourse(common.BodyRequest.Kewords)
+	doc, err := goquery.NewDocumentFromReader(resp.Body)
 
 	if err != nil {
-	return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
+		return nil, err
 	}
 
-	byResponse := BodyResponse{
-Courses: courseList,
-	}
+	coursesList := make([]common.CourseInfo, 0)
 
-	response, err :json.Marshal(&bodyResponse)
+	doc.Find(courseListSelector).Each(func(i int, s *goquery.Selection) {
 
-	ierr != nil {
-return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
-	}
-resp := events.APIGatwayProxyResponse{Body: string(response), StatusCode: 200}
+		imageURL, _ := s.Find(courseImgSelector).First().Attr("src")
+		link, _ := s.Attr("href")
 
-resp.Headers = make(map[string]string)
-	rsp.Headers["Content-Type"] = "application/son"
-eturn resp, nil
+		course := common.CourseInfo{
+			Title:    strings.TrimSpace(s.Find(courseTitleSelector).First().Text()),
+			ImageURL: strings.TrimSpace(imageURL),
+			URL:      strings.TrimSpace(baseURL + link)}
+
+		coursesList = append(coursesList, course)
+	})
+
+	return coursesList, nil
 }
 
-fu main() {
-lambda.Start(handler)
+func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	// BodyRequest will be used to take the json response from client and build it
+	bodyRequest := common.BodyRequest{
+		Keywords: []string{},
+	}
 
+	err := json.Unmarshal([]byte(request.Body), &bodyRequest)
+
+	if err != nil {
+		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
+	}
+
+	courseList, err := searchForCourse(bodyRequest.Keywords)
+
+	if err != nil {
+		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
+	}
+
+	bodyResponse := common.BodyResponse{
+		Courses: courseList,
+	}
+
+	response, err := json.Marshal(&bodyResponse)
+
+	if err != nil {
+		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
+	}
+	resp := events.APIGatewayProxyResponse{Body: string(response), StatusCode: 200}
+
+	resp.Headers = make(map[string]string)
+	resp.Headers["Content-Type"] = "application/json"
+	return resp, nil
+}
+
+func main() {
+	lambda.Start(handler)
+}
