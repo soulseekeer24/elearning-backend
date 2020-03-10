@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 
+	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/chromedp/chromedp"
 	"github.com/golearn/common"
 )
@@ -35,14 +36,12 @@ const jssQuery = `
 		})();
 `
 
-func HandleRequest(ctx context.Context, courseName string) ([]common.CourseInfo, error) {
+func HandleRequest(ctx context.Context, request common.BodyRequest) ([]common.CourseInfo, error) {
 	// create context
-	result := SearchEDX(courseName)
+	result := SearchEDX("lol")
 	return result, nil
 }
-func main(){
-	fmt.("lol")
-}
+
 func SearchEDX(courseName string) []common.CourseInfo {
 	ctx, cancel := chromedp.NewContext(context.Background())
 	defer cancel()
@@ -59,4 +58,7 @@ func SearchEDX(courseName string) []common.CourseInfo {
 	}
 
 	return res
+}
+func main() {
+	lambda.Start(HandleRequest)
 }
