@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/chromedp/chromedp"
 	"github.com/golearn/common"
@@ -36,10 +38,25 @@ const jssQuery = `
 		})();
 `
 
-func HandleRequest(ctx context.Context, request common.BodyRequest) ([]common.CourseInfo, error) {
+func HandleRequest(ctx context.Context, request common.BodyRequest) (events.APIGatewayProxyResponse, error) {
 	// create context
 	result := SearchEDX("lol")
-	return result, nil
+
+	bodyResponse := common.BodyResponse{
+		Courses: result,
+	}
+
+	response, err := json.Marshal(&bodyResponse)
+
+	if err != nil {
+		return events.APIGatewayProxyResponse{Body: err.Error(), StatusCode: 404}, nil
+	}
+
+	resp := events.APIGatewayProxyResponse{Body: string(response), StatusCode: 200}
+
+	resp.Headers = make(map[string]string)
+	resp.Headers["Content-Type"] = "application/json"
+	return resp, nil
 }
 
 func SearchEDX(courseName string) []common.CourseInfo {
