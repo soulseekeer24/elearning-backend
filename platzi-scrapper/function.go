@@ -14,7 +14,6 @@ const courseListSelector = "body > section.SearcherMaterial > div > ul > a"
 const courseImgSelector = ".SearcherMaterial-itemImage > img"
 const courseTitleSelector = ".SearcherMaterial-itemName"
 
-// gcloud functions deploy HelloGet --runtime go111 --trigger-http --allow-unauthenticated
 func searchForCourse(courses []string) ([]common.CourseInfo, error) {
 
 	var courseQuery = ""
@@ -51,7 +50,8 @@ func searchForCourse(courses []string) ([]common.CourseInfo, error) {
 	return coursesList, nil
 }
 
-func Handler(w http.ResponseWriter, r *http.Request) {
+// PlatziHandler handler for google cloud function on google cloud
+func PlatziHandler(w http.ResponseWriter, r *http.Request) {
 	// BodyRequest will be used to take the json response from client and build it
 	bodyRequest := common.BodyRequest{
 		Keywords: []string{},

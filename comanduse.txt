@@ -1,0 +1,49 @@
+deploy google cloud gateway
+
+gcloud run deploy CLOUD_RUN_SERVICE_NAME \
+    --image="gcr.io/endpoints-release/endpoints-runtime-serverless:2" \
+    --allow-unauthenticated \
+    --platform managed \
+    --project=ESP_PROJECT_ID
+
+
+gcloud run deploy e-learn-gateway \
+    --image="gcr.io/endpoints-release/endpoints-runtime-serverless:2" \
+    --allow-unauthenticated \
+    --platform managed \
+    --project=master-mote-235117
+
+
+region por defecto
+gcloud config set run/region us-east1
+
+deploy the endpoints
+gcloud endpoints services deploy openapi-functions.yaml \
+    --project master-mote-235117
+
+
+requiere que actives 
+gcloud services enable ENDPOINTS_SERVICE_NAME
+
+para construir la imagen
+
+./gcloud_build_image -s e-learn-gateway-vkuxmlaokq-ue.a.run.app \
+    -c 2020-03-25r0 -p master-mote-235117
+
+
+gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-ue.a.run.app-2020-03-25r0
+
+redeploya el contendor
+gcloud run deploy e-learn-gateway \
+    --image="gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-ue.a.run.app-2020-03-25r0" \
+    --allow-unauthenticated \
+    --platform managed \
+    --project=master-mote-235117
+
+
+//set permisos para la fnciones
+
+gcloud functions add-iam-policy-binding FUNCTION_NAME \
+   --member "serviceAccount:ESP_PROJECT_NUMBER-compute@developer.gserviceaccount.com" \
+   --role "roles/cloudfunctions.invoker" \
+   --project FUNCTIONS_PROJECT_ID

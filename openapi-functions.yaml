@@ -1,0 +1,22 @@
+swagger: "2.0"
+info:
+  title: E-learn education api
+  description: Sample API on Cloud Endpoints with a Google Cloud Functions backend
+  version: 1.0.0
+host: e-learn-gateway-vkuxmlaokq-ue.a.run.app
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /platzi:
+    post:
+      summary: Obtiene los cursos de platzi segun las palabras que se le mandan
+      operationId: platzi
+      x-google-backend:
+        address: https://us-central1-master-mote-235117.cloudfunctions.net/Handler
+      responses:
+        "200":
+          description: A successful response
+          schema:
+            type: string

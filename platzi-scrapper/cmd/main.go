@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	funcframework.RegisterHTTPFunction("/", platzi.Handler)
+	funcframework.RegisterHTTPFunction("/", platzi.PlatziHandler)
 	// Use PORT environment variable, or default to 8080.
 	port := "8080"
 	if envPort := os.Getenv("PORT"); envPort != "" {
