@@ -1,3 +1,5 @@
 .aws-sam/
 .vscode/
 .exe
+bin/
+vendor/
