@@ -37,6 +37,7 @@ redeploya el contendor
 gcloud run deploy e-learn-gateway \
     --image="gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-ue.a.run.app-2020-03-25r0" \
     --allow-unauthenticated \
+    --set-env-vars=ESPv2_ARGS=^++^--cors_preset=basic++--cors_allow_origin=e-learn.academy.com \
     --platform managed \
     --project=master-mote-235117
 
@@ -80,11 +81,11 @@ Service Configuration [2020-03-28r1] uploaded for service [e-learn-gateway-vkuxm
 To manage your API, go to: https://console.cloud.google.com/endpoints/api/e-learn-gateway-vkuxmlaokq-uc.a.run.app/overview?project=master-mote-235117
 
 
-/gcloud_build_image -s e-learn-gateway-vkuxmlaokq-uc.a.run.app -c 2020-03-28r1 -p master-mote-235117
+/gcloud_build_image.sh -s e-learn-gateway-vkuxmlaokq-uc.a.run.app -c 2020-03-28r3 -p master-mote-235117
 
 gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-uc.a.run.app-2020-03-28r1 
 
-gcloud run deploy e-learn-gateway  --image="gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-uc.a.run.app-2020-03-28r1" --allow-unauthenticated --platform managed --project=master-mote-235117
+gcloud run deploy e-learn-gateway  --image="gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-uc.a.run.app-2020-03-28r3" --allow-unauthenticated --platform managed --project=master-mote-235117
 
 //FOR functions
 gcloud functions add-iam-policy-binding HandlerPlatzi --member "serviceAccount:737848563782-compute@developer.gserviceaccount.com" --role "roles/cloudfunctions.invoker" --project master-mote-235117
