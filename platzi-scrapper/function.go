@@ -52,6 +52,15 @@ func searchForCourse(courses []string) ([]common.CourseInfo, error) {
 
 // HandlerPlatzi handler for google cloud function on google cloud
 func HandlerPlatzi(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodOptions {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "POST")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		w.Header().Set("Access-Control-Max-Age", "3600")
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
+
 	// BodyRequest will be used to take the json response from client and build it
 	bodyRequest := common.BodyRequest{
 		Keywords: []string{},
@@ -84,7 +93,7 @@ func HandlerPlatzi(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(err.Error()))
 		return
 	}
-
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(response))
 
