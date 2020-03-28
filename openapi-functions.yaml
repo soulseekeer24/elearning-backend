@@ -4,9 +4,6 @@ info:
   description: Sample API on Cloud Endpoints with a Google Cloud Functions backend
   version: 1.0.0
 host: e-learn-gateway-vkuxmlaokq-uc.a.run.app
-x-google-endpoints:
-  - name: "e-learn-gateway-vkuxmlaokq-uc.a.run.app"
-    allowCors: True
 schemes:
   - https
 produces:
