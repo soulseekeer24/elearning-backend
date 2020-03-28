@@ -43,7 +43,7 @@ gcloud run deploy e-learn-gateway \
 
 //set permisos para la fnciones
 
-gcloud functions add-iam-policy-binding FUNCTION_NAME \
-   --member "serviceAccount:ESP_PROJECT_NUMBER-compute@developer.gserviceaccount.com" \
+gcloud functions add-iam-policy-binding HandlerPlatzi \
+   --member "serviceAccount:737848563782-compute@developer.gserviceaccount.com" \
    --role "roles/cloudfunctions.invoker" \
-   --project FUNCTIONS_PROJECT_ID
+   --project master-mote-235117

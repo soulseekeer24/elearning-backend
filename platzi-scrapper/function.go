@@ -50,8 +50,8 @@ func searchForCourse(courses []string) ([]common.CourseInfo, error) {
 	return coursesList, nil
 }
 
-// PlatziHandler handler for google cloud function on google cloud
-func PlatziHandler(w http.ResponseWriter, r *http.Request) {
+// HandlerPlatzi handler for google cloud function on google cloud
+func HandlerPlatzi(w http.ResponseWriter, r *http.Request) {
 	// BodyRequest will be used to take the json response from client and build it
 	bodyRequest := common.BodyRequest{
 		Keywords: []string{},

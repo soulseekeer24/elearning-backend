@@ -13,8 +13,9 @@ paths:
     post:
       summary: Obtiene los cursos de platzi segun las palabras que se le mandan
       operationId: platzi
+      security: []
       x-google-backend:
-        address: https://us-central1-master-mote-235117.cloudfunctions.net/Handler
+        address: https://us-central1-master-mote-235117.cloudfunctions.net/HandlerPlatzi
       responses:
         "200":
           description: A successful response
