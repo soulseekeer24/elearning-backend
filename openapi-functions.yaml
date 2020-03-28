@@ -23,3 +23,14 @@ paths:
           description: A successful response
           schema:
             type: string
+  /edx:
+    post:
+      summary: Obtiene los cursos de edx segun las palabras que se le mandan
+      operationId: platzi
+      x-google-backend:
+        address: https://us-central1-master-mote-235117.cloudfunctions.net/HanlderEDX
+      responses:
+        "200":
+          description: A successful response
+          schema:
+            type: string
