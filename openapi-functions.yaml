@@ -3,7 +3,7 @@ info:
   title: E-learn education api
   description: Sample API on Cloud Endpoints with a Google Cloud Functions backend
   version: 1.0.0
-host: e-learn-gateway-vkuxmlaokq-ue.a.run.app
+host: e-learn-gateway-vkuxmlaokq-uc.a.run.app
 schemes:
   - https
 produces:
@@ -13,7 +13,6 @@ paths:
     post:
       summary: Obtiene los cursos de platzi segun las palabras que se le mandan
       operationId: platzi
-      security: []
       x-google-backend:
         address: https://us-central1-master-mote-235117.cloudfunctions.net/HandlerPlatzi
       responses:

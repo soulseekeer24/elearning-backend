@@ -47,3 +47,44 @@ gcloud functions add-iam-policy-binding HandlerPlatzi \
    --member "serviceAccount:737848563782-compute@developer.gserviceaccount.com" \
    --role "roles/cloudfunctions.invoker" \
    --project master-mote-235117
+
+
+///////////
+Implementa ESPv2 Beta en Cloud Run. Reemplaza CLOUD_RUN_SERVICE_NAME por el nombre que deseas usar para el servicio.
+
+gcloud run deploy e-learn-gateway  --image="gcr.io/endpoints-release/endpoints-runtime-serverless:2" --allow-unauthenticated --platform managed --project=master-mote-235117
+
+Deploying container to Cloud Run service [e-learn-gateway] in project [master-mote-235117] region [us-central1]
+Deploying new service...
+  Setting IAM Policy...done
+  Creating Revision...done
+  Routing traffic...done
+Done.
+Service [e-learn-gateway] revision [e-learn-gateway-00001-hal] has been deployed and is serving 100 percent of traffic at https://e-learn-gateway-vkuxmlaokq-uc.a.run.app
+
+//deployar el api
+ gcloud endpoints services deploy openapi-functions.yaml --project master-mote-235117
+
+ Waiting for async operation operations/serviceConfigs.e-learn-gateway-vkuxmlaokq-uc.a.run.app:a102f9b4-aa73-4fca-b636-21fa9d7f4177 to complete...  
+Operation finished successfully. The following command can describe the Operation details:
+ gcloud endpoints operations describe operations/serviceConfigs.e-learn-gateway-vkuxmlaokq-uc.a.run.app:a102f9b4-aa73-4fca-b636-21fa9d7f4177       
+
+WARNING: openapi-functions.yaml: Operation 'post' in path '/platzi': Operation does not require an API key; callers may invoke the method without specifying an associated API-consuming project. To enable API key all the SecurityRequirement Objects (https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#security-requirement-object) inside security definition must reference at least one SecurityDefinition of type : 'apiKey'.
+
+Waiting for async operation operations/rollouts.e-learn-gateway-vkuxmlaokq-uc.a.run.app:e005f285-15e8-4566-9547-cea1e76f4cc9 to complete...
+Operation finished successfully. The following command can describe the Operation details:
+ gcloud endpoints operations describe operations/rollouts.e-learn-gateway-vkuxmlaokq-uc.a.run.app:e005f285-15e8-4566-9547-cea1e76f4cc9
+
+Service Configuration [2020-03-28r1] uploaded for service [e-learn-gateway-vkuxmlaokq-uc.a.run.app]
+
+To manage your API, go to: https://console.cloud.google.com/endpoints/api/e-learn-gateway-vkuxmlaokq-uc.a.run.app/overview?project=master-mote-235117
+
+
+/gcloud_build_image -s e-learn-gateway-vkuxmlaokq-uc.a.run.app -c 2020-03-28r1 -p master-mote-235117
+
+gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-uc.a.run.app-2020-03-28r1 
+
+gcloud run deploy e-learn-gateway  --image="gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-uc.a.run.app-2020-03-28r1" --allow-unauthenticated --platform managed --project=master-mote-235117
+
+//FOR functions
+gcloud functions add-iam-policy-binding HandlerPlatzi --member "serviceAccount:737848563782-compute@developer.gserviceaccount.com" --role "roles/cloudfunctions.invoker" --project master-mote-235117
