@@ -92,4 +92,13 @@ gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaok
 
 ./gcloud_build_image.sh -s e-learn-gateway-vkuxmlaokq-ue.a.run.app \
     -c 2020-03-28r4 -p master-mote-235117
-gcloud run deploy e-learn-gateway  --image="gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-uc.a.run.app-2020-03-28r4" --allow-unauthenticated --platform managed --project=master-mote-235117
+gcloud run deploy e-learn-gateway   --image="gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-uc.a.run.app-2020-03-28r4" --allow-unauthenticated --platform managed --project=master-mote-235117
+
+
+
+--cors_preset=cors_with_regex
+--cors_allow_origin_regex='^https?://.+\.e-learn\.academy$'
+
+./gcloud_build_image.sh -s e-learn-gateway-vkuxmlaokq-uc.a.run.app -c 2020-03-29r0 -p master-mote-235117
+
+gcloud run deploy e-learn-gateway --image="gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-uc.a.run.app-2020-03-29r0" --allow-unauthenticated --platform managed --project=master-mote-235117
