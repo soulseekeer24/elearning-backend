@@ -5,11 +5,11 @@ import (
 	"os"
 
 	"github.com/GoogleCloudPlatform/functions-framework-go/funcframework"
-	"github.com/golearn/platzi"
+	edxscrapper "github.com/golearn/edx-scrapper"
 )
 
 func main() {
-	funcframework.RegisterHTTPFunction("/", platzi.HandlerPlatzi)
+	funcframework.RegisterHTTPFunction("/", edxscrapper.HandlerPlatzi)
 	// Use PORT environment variable, or default to 8080.
 	port := "8080"
 	if envPort := os.Getenv("PORT"); envPort != "" {

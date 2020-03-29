@@ -28,7 +28,7 @@ gcloud services enable ENDPOINTS_SERVICE_NAME
 para construir la imagen
 
 ./gcloud_build_image -s e-learn-gateway-vkuxmlaokq-ue.a.run.app \
-    -c 2020-03-25r0 -p master-mote-235117
+    -c 2020-03-28r4 -p master-mote-235117
 
 
 gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-ue.a.run.app-2020-03-25r0
@@ -43,7 +43,7 @@ gcloud run deploy e-learn-gateway \
 
 //set permisos para la fnciones
 
-gcloud functions add-iam-policy-binding HandlerPlatzi \
+gcloud functions add-iam-policy-binding HandlerEDX \
    --member "serviceAccount:737848563782-compute@developer.gserviceaccount.com" \
    --role "roles/cloudfunctions.invoker" \
    --project master-mote-235117
@@ -88,3 +88,8 @@ gcloud run deploy e-learn-gateway  --image="gcr.io/master-mote-235117/endpoints-
 
 //FOR functions
 gcloud functions add-iam-policy-binding HandlerPlatzi --member "serviceAccount:737848563782-compute@developer.gserviceaccount.com" --role "roles/cloudfunctions.invoker" --project master-mote-235117
+gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-uc.a.run.app-2020-03-28r4
+
+./gcloud_build_image.sh -s e-learn-gateway-vkuxmlaokq-ue.a.run.app \
+    -c 2020-03-28r4 -p master-mote-235117
+gcloud run deploy e-learn-gateway  --image="gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-uc.a.run.app-2020-03-28r4" --allow-unauthenticated --platform managed --project=master-mote-235117
