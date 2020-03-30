@@ -80,7 +80,7 @@ Service Configuration [2020-03-28r1] uploaded for service [e-learn-gateway-vkuxm
 To manage your API, go to: https://console.cloud.google.com/endpoints/api/e-learn-gateway-vkuxmlaokq-uc.a.run.app/overview?project=master-mote-235117
 
 
-/gcloud_build_image.sh -s e-learn-gateway-vkuxmlaokq-uc.a.run.app -c 2020-03-28r3 -p master-mote-235117
+/gcloud_build_image.sh -s e-learn-gateway-vkuxmlaokq-uc.a.run.app -c 2020-03-30r0 -p master-mote-235117
 
 gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-uc.a.run.app-2020-03-28r1 
 
@@ -101,4 +101,4 @@ gcloud run deploy e-learn-gateway   --image="gcr.io/master-mote-235117/endpoints
 
 ./gcloud_build_image.sh -s e-learn-gateway-vkuxmlaokq-uc.a.run.app -c 2020-03-29r0 -p master-mote-235117
 
-gcloud run deploy e-learn-gateway --image="gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-uc.a.run.app-2020-03-29r0" --allow-unauthenticated --platform managed --project=master-mote-235117
+gcloud run deploy e-learn-gateway  --image="gcr.io/master-mote-235117/endpoints-runtime-serverless:e-learn-gateway-vkuxmlaokq-uc.a.run.app-2020-03-30r0 " --allow-unauthenticated --platform managed --project=master-mote-235117
