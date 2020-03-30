@@ -34,3 +34,14 @@ paths:
           description: A successful response
           schema:
             type: string
+  /udemy:
+    post:
+      summary: Obtiene los cursos de edx segun las palabras que se le mandan
+      operationId: udemy
+      x-google-backend:
+        address: https://us-central1-master-mote-235117.cloudfunctions.net/HandlerUdemy
+      responses:
+        "200":
+          description: A successful response
+          schema:
+            type: string
